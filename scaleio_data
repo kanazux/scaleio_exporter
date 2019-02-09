@@ -1,0 +1,11 @@
+#!/bin/python3.6
+# -*- coding: utf-8 -*-
+
+
+from scaleio_exporter.scl_parse import scaleio_data
+from scaleio_exporter.scl_conn import connect_scaleio
+
+
+scl_conn = connect_scaleio("scaleio_exporter.ini")
+scl_conn.conn()
+scaleio_data().read_data()

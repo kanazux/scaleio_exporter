@@ -25,8 +25,8 @@ class connect_scaleio():
 
         self.conf = conf
         self.scli = "/bin/scli"
-        self.login = ("{} --login --mdm_ips {} -- mdm_port {} "
-                      "--username {} --password {}")
+        self.login = ("{} --mdm_ip {} --mdm_port {} --login "
+                      "--username {} --password {} --approve_certificate")
 
     def config_ini(self):
         """Read ini file to get env variables to connect on scaleio."""
@@ -51,7 +51,8 @@ class connect_scaleio():
             if not get_config.get(param) or get_config.get(param) == "":
                 print("Local variable {} not set in terminal.\nExiting...\n".format(param))
         
-        return self.login.format(get_config.get("mdm_ips"),
+        return self.login.format(self.scli,
+                                 get_config.get("mdm_ips"),
                                  get_config.get("mdm_port"),
                                  get_config.get("username"),
                                  get_config.get("password"))
@@ -59,5 +60,6 @@ class connect_scaleio():
     def conn(self):
         """Connect on the ScaleIO."""
 
-        _conn = check_output([self.login], shell=True)
+        _conn = check_output([self.get_login()], shell=True)
+        os.system(self.get_login())
         print(_conn)
