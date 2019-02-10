@@ -44,6 +44,6 @@ class zbx_sender():
         except CalledProcessError:
             return "CalledProcessError"
         finally:
-            scl_logger(str(sys.exc_info()))
+            scl_logger(str(sys.exc_info())).log_data()
 
         return "ok"

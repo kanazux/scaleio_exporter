@@ -6,6 +6,7 @@ import os
 import sys
 from subprocess import call, check_output
 from configparser import SafeConfigParser
+from scaleio_exporter.scl_logger import scl_logger
 
 
 class connect_scaleio():
@@ -37,7 +38,7 @@ class connect_scaleio():
             Check if the file {} exists in the directory.
             Exiting...
             """.format(self.conf)
-            print(error_msg)
+            scl_logger(error_msg).log_data()
             sys.exit(0)
         config = SafeConfigParser(os.environ)
         config.read(self.conf)
