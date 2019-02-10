@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+import time
 import socket
 from collections import defaultdict
 from subprocess import check_output, STDOUT
@@ -24,19 +25,21 @@ class scaleio_data(object):
             "FAILED_CAPACITY_IN_KB,USER_DATA_READ_BWC,USER_DATA_WRITE_BWC,REBALANCE_READ_BWC,"
             "FWD_REBUILD_READ_BWC,BCK_REBUILD_READ_BWC,AVAILABLE_FOR_THICK_ALLOCATION_IN_KB"
         )
-        self.conn = connect_scaleio("scaleio_exporter.ini")
-        self.mdm_ips = self.conn.config_ini().get("mdm_ips")
-        self.mdm_port = self.conn.config_ini().get("mdm_port")
-        self.user = self.conn.config_ini().get("username")
-        self.passwd = self.conn.config_ini().get("password")
+        self.conf = connect_scaleio("scaleio_exporter.ini")
+        self.mdm_ips = self.conf.config_ini().get("mdm_ips")
+        self.mdm_port = self.conf.config_ini().get("mdm_port")
+        self.user = self.conf.config_ini().get("username")
+        self.passwd = self.conf.config_ini().get("password")
         self.query = "{} {} {} --mdm_ip {} --mdm_port {}".format(
-            self.conn.scli, self.params, self.properties, self.mdm_ips, self.mdm_port
+            self.conf.scli, self.params, self.properties, self.mdm_ips, self.mdm_port
         )
         self.data_dict = defaultdict(lambda: False)
         self.hostname = socket.gethostname()
         self.data_dict[self.hostname] = defaultdict(lambda: False)
 
     def read_data(self):
+        """Get ScaleIO data and put into a default dict."""
+        
         raw_data = check_output([self.query], shell=True, stderr=STDOUT)
         storages = list(filter(None, raw_data.split("STORAGE_POOL".encode())))
         for storage in storages:
