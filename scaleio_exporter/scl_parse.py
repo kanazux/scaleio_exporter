@@ -25,7 +25,7 @@ class scaleio_data(object):
             "FAILED_CAPACITY_IN_KB,USER_DATA_READ_BWC,USER_DATA_WRITE_BWC,REBALANCE_READ_BWC,"
             "FWD_REBUILD_READ_BWC,BCK_REBUILD_READ_BWC,AVAILABLE_FOR_THICK_ALLOCATION_IN_KB"
         )
-        self.conf = connect_scaleio("scaleio_exporter.ini")
+        self.conf = connect_scaleio("/etc/scaleio_exporter/scaleio_exporter.ini")
         self.mdm_ips = self.conf.config_ini().get("mdm_ips")
         self.mdm_port = self.conf.config_ini().get("mdm_port")
         self.user = self.conf.config_ini().get("username")

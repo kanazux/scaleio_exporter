@@ -33,11 +33,11 @@ class connect_scaleio():
         """Read ini file to get env variables to connect on scaleio."""
 
         if not os.path.exists(self.conf):
-            error_msg = """
-            Config file not founded.
-            Check if the file {} exists in the directory.
-            Exiting...
-            """.format(self.conf)
+            error_msg = (
+                "Config file not founded.\n"
+                "Check if the file {} exists in the directory.\n"
+                "Exiting..."
+            ).format(self.conf)
             scl_logger(error_msg).log_data()
             sys.exit(0)
         config = SafeConfigParser(os.environ)

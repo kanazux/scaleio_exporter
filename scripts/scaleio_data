@@ -14,7 +14,7 @@ def main():
     while True:
         out = scl_sender.send_data()
         if out == "CalledProcessError":
-            connect_scaleio("scaleio_exporter.ini").conn()
+            connect_scaleio("/etc/scaleio_exporter/scaleio_exporter.ini").conn()
             scl_sender.send_data()
         time.sleep(10)
 
