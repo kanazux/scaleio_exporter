@@ -27,4 +27,4 @@ class scl_logger():
     def log_data(self):
         self.check_dir()
         with open(self.log_file, "a") as logger_file:
-            logger_file.write("{}, {}".format(self.time, self.msg))
+            logger_file.write("{}, {}\n".format(self.time, self.msg))
