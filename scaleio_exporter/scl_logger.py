@@ -18,6 +18,7 @@ class scl_logger():
 
     def check_dir(self):
         """Check if log directory exists and create if not."""
+
         if not os.path.isdir(self.directory):
             os.mkdir(self.directory, 755)
         if not os.path.exists(self.log_file):
@@ -25,6 +26,8 @@ class scl_logger():
             Path(self.log_file).touch()
 
     def log_data(self):
+        """Log errors into file scl_zbx.log in the directory /var/log/scaleio."""
+
         self.check_dir()
         with open(self.log_file, "a") as logger_file:
             logger_file.write("{}, {}\n".format(self.time, self.msg))

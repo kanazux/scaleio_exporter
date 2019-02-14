@@ -55,7 +55,14 @@ class zbx_sender():
                 os.unlink(zbx_tmp_file.name)
 
     def send_data(self):
-        """Send data to a Zabbix server."""
+        """
+        Send data to a Zabbix server.
+        
+        Format data to save into a file on the /tmp directory.
+        The data will be saved like example above:
+        <hostname> <variable[storage]> <value>
+        zabbix_sender will be used to send data to a zabbix proxy.
+        """
 
         try:
             get_data = self.scl_data.read_data()
@@ -75,6 +82,7 @@ class zbx_sender():
             with open('/tmp/scale_items', 'w') as scale_items:
                 scale_items.write("\n".join(var_list))
             call([self.zbx_sender.format(self.zbx_conf, self.hostname, "/tmp/scale_items")], shell=True)
+            os.unlink('/tmp/scale_items')
         except CalledProcessError:
             return "CalledProcessError"
         except Exception as error:

@@ -62,4 +62,4 @@ class connect_scaleio():
         """Connect on the ScaleIO."""
 
         _conn = check_output([self.get_login()], shell=True)
-        print(_conn)
+        scl_logger(_conn).log_data()
