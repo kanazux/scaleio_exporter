@@ -68,17 +68,15 @@ class zbx_sender():
             get_data = self.scl_data.read_data()
             self.check_discover(
                 set([get_data[self.hostname][pool]['NAME'] for pool in get_data[self.hostname]]))
+            
             var_list = []
             var_line = "{} {} {}"
             for storage in get_data[self.hostname]:
                 for key, value in get_data[self.hostname][storage].items():
                     var_list.append(var_line.format(self.hostname, 
-                                       "{}[{}]".format(
-                                           key,
-                                           get_data[self.hostname][storage]['NAME']
-                                       ),
-                                       value)
-                    )
+                                                    "{}[{}]".format(key, get_data[self.hostname][storage]['NAME']),
+                                                    value))
+            
             with open('/tmp/scale_items', 'w') as scale_items:
                 scale_items.write("\n".join(var_list))
             call([self.zbx_sender.format(self.zbx_conf, self.hostname, "/tmp/scale_items")], shell=True)
