@@ -3,20 +3,23 @@
 
 
 import time
+from daemon import Daemon
 from scaleio_exporter.scl_send import zbx_sender
 from scaleio_exporter.scl_conn import connect_scaleio
 
 
-def main():
+class scl_main(Daemon):
     """Script to read ScaleIO data and send to a Zabbix server or Proxy."""
 
-    scl_sender = zbx_sender()
-    while True:
-        out = scl_sender.send_data()
-        if out == "CalledProcessError":
-            connect_scaleio("/etc/scaleio_exporter/scaleio_exporter.ini").conn()
-            scl_sender.send_data()
-        time.sleep(10)
+    def run(self):
+        scl_sender = zbx_sender()
+        while True: 
+            out = scl_sender.send_data()
+            if out == "CalledProcessError":
+                connect_scaleio("/etc/scaleio_exporter/scaleio_exporter.ini").conn()
+                scl_sender.send_data()
+            time.sleep(10)
 
 if __name__ == "__main__":
-    main()
+    main = scl_main('/etc/scaleio_exporter/scl_daemon.pid')
+    main.start()
