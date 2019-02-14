@@ -3,7 +3,7 @@
 
 
 import time
-from daemon import Daemon
+from scaleio_exporter.daemon import Daemon
 from scaleio_exporter.scl_send import zbx_sender
 from scaleio_exporter.scl_conn import connect_scaleio
 
