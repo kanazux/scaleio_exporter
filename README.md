@@ -2,6 +2,8 @@
 
 Exporter data for ScaleIO
 
+[![Build Status](https://travis-ci.org/kanazux/scaleio_exporter.svg?branch=master)](https://travis-ci.org/kanazux/scaleio_exporter)
+
 ### Read Data
 The script will read data from ScaleIO cluster using the scli (ScaleIO CLI).
 First of all login into a ScaleIO MDM and get data of the storages created.
